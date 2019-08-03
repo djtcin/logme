@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Edit activity</h1>
+
+<div mat-dialog-content>
+  <div>
+  	<mat-form-field class="big-margin-right">
+    	<input matInput placeholder="Title" [(ngModel)]="data.activity.title">
+  	</mat-form-field>
+  	<mat-form-field>
+    	<input matInput placeholder="Type" [(ngModel)]="data.activity.type.name" disabled>
+  	</mat-form-field>
+  </div>
+
+	<mat-list dense>
+	  <span mat-subheader>
+      Logs
+      <button mat-icon-button (click)="onAddLog()">
+        <mat-icon aria-hidden="false" aria-label="Add log">add</mat-icon>
+      </button>
+    </span>
+	  
+    <mat-list-item *ngFor="let log of data.activity.logs">
+      <!-- TODO: Implement control log list -->
+	  </mat-list-item>
+
+	</mat-list>
+
+</div>
+
+<div mat-dialog-actions>
+  <!-- 
+    TODO: Fix buttons colors 
+    TODO: Add delete button
+    TODO: place delete on left and cance/save on right
+  -->
+  <button mat-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
+  <button mat-button (click)="onSaveClick()" color="green">Save</button>
+</div>
