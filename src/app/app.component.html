@@ -12,6 +12,9 @@
   <button mat-button [matMenuTriggerFor]="appMenu" *ngIf="activityTypes.length > 0">Add</button>
   <button mat-button>Report</button>
   <button mat-button>Reset</button>
+  <button mat-icon-button (click)="onImportExportClick()">
+    <mat-icon aria-hidden="false" aria-label="Import export">import_export</mat-icon>
+  </button>
   <button mat-icon-button (click)="onOpenSettings()">
     <mat-icon aria-hidden="false" aria-label="Settings">settings</mat-icon>
   </button>

@@ -44,7 +44,7 @@ export class ActivityComponent implements OnInit {
 
 	onEditActivity() {
 		const dialogRef = this.dialog.open(ActivityDialogComponent, {
-      width: '6000px',
+      width: '600px',
       data: {activity: this.activity}
     });
 	}

@@ -10,6 +10,8 @@ import { DataStorageService } from './data-storage.service';
 const ACTIVITY = 'ACTIVITY';
 const ACTIVITY_TYPE = 'ACTIVITY_TYPE';
 const LOG = 'LOG';
+const NAME_KEY = 'settings-user-name';
+const SPRINT_KEY = 'settings-sprint';
 
 @Injectable({
   providedIn: 'root'
@@ -39,20 +41,34 @@ export class DataService {
   }
 
   exportData() {
-  	// TODO implement save LocalStorage data into a Json file
-    var data = localStorage;
-    var json = JSON.stringify(data);
-    var blob = new Blob([json], {type: "application/json"});
-    FileSaver.saveAs(blob, "test.json");   
+    const data = localStorage;
+    const json = JSON.stringify(data);
+    const blob = new Blob([json], {type: "application/json"});
+    const userName = localStorage.getItem(NAME_KEY);
+    const sprint = localStorage.getItem(SPRINT_KEY);
+
+    FileSaver.saveAs(
+      blob, 
+      'Logme data'
+        + (userName ? ' - ' + userName : '' )
+        + (sprint ? ' - Sprint ' + sprint : '')
+        + '.json'
+    );
   }
 
   importData(file) {
-    let fileReader = new FileReader();
+    const fileReader = new FileReader();
+
     fileReader.onload = (e) => {
-      console.log(JSON.parse(fileReader.result.toString()));
+      const data = JSON.parse(fileReader.result.toString());
+      localStorage.clear();
+      Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
+      this.loadFromStorage();
+      this.activityTypes$.emit(this.activityTypes.slice());
+      this.activities$.emit(this.activities.slice());
+      this.logs$.emit(this.logs.slice());
     }
     fileReader.readAsText(file);
-  	// TODO implement replace LocalStorage info by a Json file's content
   }
 
   addActivity(activity : Activity) {

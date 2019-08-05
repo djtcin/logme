@@ -6,6 +6,7 @@ import { ActivityType } from './common/activity-type';
 import { Activity } from './common/activity';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { ActivityDialogComponent } from './activity-dialog/activity-dialog.component';
+import { ImportExportDialogComponent } from './import-export-dialog/import-export-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit {
 
   onOpenSettings() {
     const dialogRef = this.dialog.open(SettingsDialogComponent, {
-      width: '6000px'
+      width: '600px'
     });
   }
 
@@ -40,8 +41,14 @@ export class AppComponent implements OnInit {
     this.dataService.addActivity(activity);
 
     const dialogRef = this.dialog.open(ActivityDialogComponent, {
-      width: '6000px',
+      width: '600px',
       data: {activity: activity}
+    });
+  }
+
+  onImportExportClick() {
+    this.dialog.open(ImportExportDialogComponent, {
+      width: '600px'
     });
   }
 }

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Export and import data</h1>
+
+<div mat-dialog-content>
+	<h4>Export</h4>
+	<button mat-stroked-button (click)="onExportClick()">Export</button>
+	<h4>Import</h4>
+	<input type='file' placeholder="Load file" accept="application/json" (change)="onImportChange($event)">
+</div>
