@@ -28,6 +28,11 @@ export class ActivityDialogComponent implements OnInit {
 
   }
 
+  onDeleteClick() {
+    this.dataService.removeActivity(this.data.activity);
+    this.dialogRef.close();
+  }
+
   onSaveClick() {
   	this.dataService.saveActivity(this.data.activity);
     this.dialogRef.close();

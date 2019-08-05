@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { UUID } from 'angular2-uuid';
+import * as FileSaver from 'file-saver';
 
 import { ActivityType } from './activity-type';
 import { Activity } from './activity';
@@ -26,16 +27,31 @@ export class DataService {
   }
 
   loadFromStorage() {
-  	this.activities = <Activity[]> this.dataStorageService.getList(ACTIVITY);
-  	this.activityTypes = <ActivityType[]> this.dataStorageService.getList(ACTIVITY_TYPE);
-  	this.logs = <Log[]> this.dataStorageService.getList(LOG);
+    this.logs = <Log[]> this.dataStorageService.getList(LOG).map(l => new Log(l));
+  	this.activityTypes = this.dataStorageService.getList(ACTIVITY_TYPE).map(t => new ActivityType(t));
+  	this.activities = this.dataStorageService.getList(ACTIVITY).map(a => {
+      const activity = new Activity(a);
+      activity.logs = this.logs.filter(l => l.activityId == activity.id);
+      activity.type = this.activityTypes.find(t => t.id == activity.type.id);
+      return activity
+    });
+
   }
 
-  saveOnPhysicalStorage() {
+  exportData() {
   	// TODO implement save LocalStorage data into a Json file
+    var data = localStorage;
+    var json = JSON.stringify(data);
+    var blob = new Blob([json], {type: "application/json"});
+    FileSaver.saveAs(blob, "test.json");   
   }
 
-  restoreFromPhysicalStorage() {
+  importData(file) {
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      console.log(JSON.parse(fileReader.result.toString()));
+    }
+    fileReader.readAsText(file);
   	// TODO implement replace LocalStorage info by a Json file's content
   }
 
@@ -47,12 +63,24 @@ export class DataService {
     this.dataStorageService.setList(ACTIVITY, this.activities);
   }
 
+  removeActivity(activity: Activity) {
+    const index = this.activities.indexOf(activity);
+    this.activities.splice(index, 1);
+    this.activities$.emit(this.activities.slice());
+    this.dataStorageService.removeEntity(activity);
+    this.dataStorageService.setList(ACTIVITY, this.activities);
+  }
+
   saveActivityType(type: ActivityType) {
     this.dataStorageService.setEntity(type);
   }
 
   saveActivity(activity: Activity) {
     this.dataStorageService.setEntity(activity);
+  }
+
+  saveLog(log: Log) {
+    this.dataStorageService.setEntity(log);
   }
 
   removeActivityType(type: ActivityType) {

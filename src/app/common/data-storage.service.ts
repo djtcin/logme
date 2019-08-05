@@ -9,55 +9,8 @@ import { BaseEntity } from './base-entity';
   providedIn: 'root'
 })
 export class DataStorageService {
-	// public activityTypes: ActivityType[];
-	// public activities: Activity[];
-	// public logs: Log[];
 
-  constructor() { 
-	  /*let task: ActivityType = {
-  		name: "Task",
-  		order: 1
-  	};
-  	let meeting: ActivityType = {
-  		name: "Meeting",
-  		order: 2
-  	};
-
-  	this.activityTypes = [task, meeting];
-
-  	this.activities = [
-  		{
-  			title: "1234 - Implement X",
-  			type: task,
-  			logs: []
-  		},
-  		{
-  			title: "5678 - Implement Y",
-  			type: task,
-  			logs: []
-  		},
-  		{
-  			title: "Daily",
-  			type: meeting,
-  			logs: []
-  		},
-  		{
-  			title: "Planning",
-  			type: meeting,
-  			logs: []
-  		},
-  		{
-  			title: "5678 - Implement Y",
-  			type: task,
-  			logs: []
-  		},
-  		{
-  			title: "1001 - Implement Z",
-  			type: task,
-  			logs: []
-  		}
-  	];*/
-	}
+  constructor() { }
 
 	getEntity(id: string) : BaseEntity {
 		let flatItem = localStorage.getItem(id);

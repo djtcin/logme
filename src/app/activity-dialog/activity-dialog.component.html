@@ -19,7 +19,14 @@
     </span>
 	  
     <mat-list-item *ngFor="let log of data.activity.logs">
-      <!-- TODO: Implement control log list -->
+      <mat-form-field class="big-margin-right">
+        <input matInput placeholder="Start date" [owlDateTime]="dts" [owlDateTimeTrigger]="dts"  [(ngModel)]="log.startDate">
+        <owl-date-time #dts></owl-date-time>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="End date" [owlDateTime]="dte" [owlDateTimeTrigger]="dte"  [(ngModel)]="log.endDate">
+        <owl-date-time #dte></owl-date-time>
+      </mat-form-field>
 	  </mat-list-item>
 
 	</mat-list>
@@ -28,10 +35,10 @@
 
 <div mat-dialog-actions>
   <!-- 
-    TODO: Fix buttons colors 
-    TODO: Add delete button
-    TODO: place delete on left and cance/save on right
+    TODO: Fix buttons colors
   -->
+  <button mat-button (click)="onDeleteClick()" color="warn">Delete</button>
+  <span class="fill-remaining-space"></span>
   <button mat-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
-  <button mat-button (click)="onSaveClick()" color="green">Save</button>
+  <button mat-button (click)="onSaveClick()" color="primary">Save</button>
 </div>

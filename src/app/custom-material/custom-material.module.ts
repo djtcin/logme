@@ -10,7 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -24,7 +24,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   	MatListModule,
     MatDialogModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTabsModule,
 	],
   exports: [
   	BrowserAnimationsModule, 
@@ -36,7 +37,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   	MatListModule,
     MatDialogModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatTabsModule,
 	],
 })
 export class CustomMaterialModule { }

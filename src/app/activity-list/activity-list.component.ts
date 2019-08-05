@@ -17,9 +17,9 @@ export class ActivityListComponent implements OnInit {
 
   ngOnInit() {
   	this.activities = this.dataService.getActivities()
-  		.filter(a => a.type.name == this.type.name);
+  		.filter(a => a.type.id == this.type.id);
     this.dataService.getActivitiesObservable().subscribe(
-      activities => this.activities = activities.filter(a => a.type.name == this.type.name)
+      activities => this.activities = activities.filter(a => a.type.id == this.type.id)
     );  
   }
 

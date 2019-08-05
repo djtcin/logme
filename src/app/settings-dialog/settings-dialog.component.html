@@ -1,15 +1,62 @@
 <h1 mat-dialog-title>Settings</h1>
 
 <div mat-dialog-content>
-  <div>
-  	<mat-form-field class="big-margin-right">
-    	<input matInput placeholder="User name" [(ngModel)]="userName">
-  	</mat-form-field>
-  	<mat-form-field>
-    	<input matInput placeholder="Sprint" [(ngModel)]="sprint">
-  	</mat-form-field>
-  </div>
-	
+
+  <mat-tab-group>
+
+    <mat-tab label="Activity types">
+      <mat-list dense>
+        <span mat-subheader>
+          <button mat-icon-button color="primary" (click)="onAddType()">
+            <mat-icon aria-hidden="false" aria-label="Add type">add</mat-icon>
+          </button>
+        </span>
+        <mat-list-item *ngFor="let type of types">
+          <input matInput placeholder="type name" [(ngModel)]="type.name">
+          <span class="fill-remaining-space"></span>
+          <button mat-icon-button (click)="onDownType(type)">
+            <mat-icon aria-hidden="false" aria-label="Move down">arrow_drop_down</mat-icon>
+          </button>
+          <button mat-icon-button (click)="onUpType(type)">
+            <mat-icon aria-hidden="false" aria-label="Move up">arrow_drop_up</mat-icon>
+          </button>
+          <button mat-icon-button (click)="onRemoveType(type)">
+            <mat-icon aria-hidden="false" aria-label="Remove">close</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
+
+
+    <mat-tab label="Report">
+      <div class="big-margin-top">
+        <mat-form-field class="big-margin-right">
+          <input matInput placeholder="User name" [(ngModel)]="userName">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Sprint" [(ngModel)]="sprint">
+        </mat-form-field>
+      </div>
+    </mat-tab>
+
+
+    <mat-tab label="Data">
+      <div class="big-margin-top">
+        <button mat-stroked-button (click)="onExportClick()">Export</button>
+      </div>
+      <div class="big-margin-top">
+        <label>Import: </label>
+        <input type='file' placeholder="Load file" (change)="onImportChange($event)">
+      </div>
+    </mat-tab>
+
+
+  </mat-tab-group>
+
+</div>
+  
 <!--
   TODO: Allow to select rows
   TODO: highlight rows with hover state
@@ -24,33 +71,8 @@
   TODO: Create new field to save the plural name for the type (or use pluralize to de name of panels)
 -->
 
-	<mat-list dense>
-	  <span mat-subheader>
-      Activity types 
-      <button mat-icon-button (click)="onAddType()">
-        <mat-icon aria-hidden="false" aria-label="Add type">add</mat-icon>
-      </button>
-    </span>
-	  
-    <mat-list-item *ngFor="let type of types">
-      <input matInput placeholder="type name" [(ngModel)]="type.name">
-      <span class="fill-remaining-space"></span>
-      <button mat-icon-button (click)="onDownType(type)">
-        <mat-icon aria-hidden="false" aria-label="Move down">arrow_drop_down</mat-icon>
-      </button>
-      <button mat-icon-button (click)="onUpType(type)">
-        <mat-icon aria-hidden="false" aria-label="Move up">arrow_drop_up</mat-icon>
-      </button>
-      <button mat-icon-button (click)="onRemoveType(type)">
-        <mat-icon aria-hidden="false" aria-label="Remove">close</mat-icon>
-      </button>
-	  </mat-list-item>
-
-	</mat-list>
-
-</div>
-
 <div mat-dialog-actions>
+  <span class="fill-remaining-space"></span>
   <button mat-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
-  <button mat-button (click)="onSaveClick()" color="green">Save</button>
+  <button mat-button (click)="onSaveClick()" color="primary">Save</button>
 </div>

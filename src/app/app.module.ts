@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { ActivityComponent } from './activity/activity.component';
 import { ActivityTypeComponent } from './activity-type/activity-type.component';
-import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import { DataService } from './common/data.service';
 import { DataStorageService } from './common/data-storage.service';
@@ -19,7 +19,6 @@ import { ActivityDialogComponent } from './activity-dialog/activity-dialog.compo
     AppComponent,
     ActivityComponent,
     ActivityTypeComponent,
-    ActivityLogComponent,
     ActivityListComponent,
     SettingsDialogComponent,
     ActivityDialogComponent
@@ -28,7 +27,9 @@ import { ActivityDialogComponent } from './activity-dialog/activity-dialog.compo
     BrowserModule,
     AppRoutingModule,
     CustomMaterialModule,
-    FormsModule
+    FormsModule,
+    OwlDateTimeModule, 
+    OwlNativeDateTimeModule
   ],
   providers: [
     DataService, 

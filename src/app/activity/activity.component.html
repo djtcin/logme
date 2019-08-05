@@ -1,9 +1,26 @@
 <mat-list-item>
   <span>{{ activity.title }}</span>
   <span class="fill-remaining-space"></span>
-  <span>
-  	<button mat-icon-button (click)="onEditActivity()">
-      <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
-    </button>
-  </span>
+
+  <!--
+    TODO: update timer every 5 minutes (use async property and observes)
+    TODO: show time not in progress on gray color
+    TODO: show time in progress on green color
+    TODO: replace time+icon by button start/stop when hovered
+    TODO: place activity in progress on top
+    TODO: highlight activity in progress (background color?)
+    TODO: highlight hovered activity (background color) 
+  -->
+
+  <span>{{ activity.totalTime() }}</span>
+  <mat-icon aria-hidden="false" aria-label="In progress" *ngIf="activity.isInProgress()">play_arrow</mat-icon>
+  <button mat-button (click)="onStart()" *ngIf="!activity.isInProgress()">
+    Start
+  </button>
+  <button mat-button (click)="onStop()" *ngIf="activity.isInProgress()">
+    Stop
+  </button>
+	<button mat-icon-button (click)="onEditActivity()">
+    <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
+  </button>
 </mat-list-item>

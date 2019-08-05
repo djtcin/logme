@@ -75,4 +75,13 @@ export class SettingsDialogComponent implements OnInit {
   	this.deletedTypes.push(type);
   	this.types.splice(index, 1);
   }
+
+  onExportClick() {
+    this.dataService.exportData();
+  }
+
+  onImportChange(event) {
+    // TODO: save last changes?
+    this.dataService.importData(event.target.files[0]);
+  }
 }
