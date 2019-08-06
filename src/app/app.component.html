@@ -20,6 +20,12 @@
   </button>
 </mat-toolbar>
 
+<mat-toolbar>
+  <span class="fill-remaining-space"></span>
+  <span class="toolbar-report big-margin-right">Today: {{ totalHoursToday() }}h</span>
+  <span class="toolbar-report">Sprint: {{ totalHours() }}h</span>
+</mat-toolbar>
+
 <mat-accordion multi="true">
   <app-activity-list *ngFor="let type of activityTypes" [type]="type">
   </app-activity-list>

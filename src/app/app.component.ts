@@ -16,6 +16,7 @@ import { ImportExportDialogComponent } from './import-export-dialog/import-expor
 export class AppComponent implements OnInit {
   title = 'Logme';
   activityTypes: ActivityType[];
+  activities: Activity[];
 
   // TODO: review access type (public vs private)
   constructor(private dataService: DataService, public dialog: MatDialog) { }
@@ -25,6 +26,13 @@ export class AppComponent implements OnInit {
     this.dataService.getActivityTypesObservable().subscribe(
       (activityTypes: ActivityType[]) => {
         this.activityTypes = activityTypes;
+      }
+    );
+
+    this.activities = this.dataService.getActivities();
+    this.dataService.getActivitiesObservable().subscribe(
+      (activities: Activity[]) => {
+        this.activities = activities;
       }
     );
   }
@@ -50,5 +58,22 @@ export class AppComponent implements OnInit {
     this.dialog.open(ImportExportDialogComponent, {
       width: '600px'
     });
+  }
+
+  totalHoursToday() {
+    let total = 0.0;
+    const today = new Date();
+    
+    this.activities.forEach(a => total += a.timeByDate(today));
+
+    return total.toFixed(2);  
+  }
+
+  totalHours() {
+    let total = 0.0;
+    
+    this.activities.forEach(a => total += a.totalTime());
+
+    return total.toFixed(2);  
   }
 }

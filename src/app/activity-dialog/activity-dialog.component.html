@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>Edit activity</h1>
 
 <div mat-dialog-content>
-  <div>
-  	<mat-form-field class="big-margin-right">
-    	<input matInput placeholder="Title" [(ngModel)]="data.activity.title">
+  <div class="flex-div">
+  	<mat-form-field class="big-margin-right fill-remaining-space ">
+    	<input matInput placeholder="Title" [(ngModel)]="data.activity.title" cdkFocusInitial>
   	</mat-form-field>
   	<mat-form-field>
     	<input matInput placeholder="Type" [(ngModel)]="data.activity.type.name" disabled>
@@ -39,6 +39,6 @@
   -->
   <button mat-button (click)="onDeleteClick()" color="warn">Delete</button>
   <span class="fill-remaining-space"></span>
-  <button mat-button (click)="onCancelClick()" cdkFocusInitial>Cancel</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
   <button mat-button (click)="onSaveClick()" color="primary">Save</button>
 </div>

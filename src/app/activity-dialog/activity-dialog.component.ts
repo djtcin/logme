@@ -34,12 +34,13 @@ export class ActivityDialogComponent implements OnInit {
   }
 
   onSaveClick() {
+    this.data.activity.logs.forEach(l => this.dataService.saveLog(l));
   	this.dataService.saveActivity(this.data.activity);
     this.dialogRef.close();
   }
 
   onCancelClick() {
-  	// TODO: undo name change
+  	// TODO: undo name and log changes
   	this.dialogRef.close();
   }
 
