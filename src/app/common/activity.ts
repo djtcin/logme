@@ -1,6 +1,5 @@
 import { ActivityType } from './activity-type';
 import { Log } from './log';
-
 import { BaseEntity } from './base-entity';
 
 export class Activity extends BaseEntity {
@@ -24,10 +23,6 @@ export class Activity extends BaseEntity {
 		this.logs.forEach(l => total += l.diffInHours());
 
 		return total;
-	}
-
-	totalTimeFixed() : string {
-		return this.totalTime().toFixed(2)
 	}
 
 	timeByDate(date: Date) : number {

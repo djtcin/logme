@@ -40,10 +40,6 @@ export class ActivityDialogComponent implements OnInit {
   }
 
   onCancelClick() {
-  	// TODO: undo name and log changes
   	this.dialogRef.close();
   }
-
-  // TODO: implement close with enter.
-
 }

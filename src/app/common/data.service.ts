@@ -100,7 +100,6 @@ export class DataService {
   }
 
   removeActivityType(type: ActivityType) {
-    // TODO: allow to display all activities from deleted types together as a group of activities without parent
     this.dataStorageService.removeEntity(type);
   }
 

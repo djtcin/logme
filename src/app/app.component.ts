@@ -7,6 +7,10 @@ import { Activity } from './common/activity';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { ActivityDialogComponent } from './activity-dialog/activity-dialog.component';
 import { ImportExportDialogComponent } from './import-export-dialog/import-export-dialog.component';
+import { DateTimeHelper } from './common/date-time.helper';
+
+// TODO
+const TIME_FORMAT_KEY = 'time-format';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +22,6 @@ export class AppComponent implements OnInit {
   activityTypes: ActivityType[];
   activities: Activity[];
 
-  // TODO: review access type (public vs private)
   constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -63,17 +66,19 @@ export class AppComponent implements OnInit {
   totalHoursToday() {
     let total = 0.0;
     const today = new Date();
+    const format = localStorage.getItem(TIME_FORMAT_KEY);
     
     this.activities.forEach(a => total += a.timeByDate(today));
 
-    return total.toFixed(2);  
+    return DateTimeHelper.formatTime(total, format);
   }
 
   totalHours() {
     let total = 0.0;
-    
+    const format = localStorage.getItem(TIME_FORMAT_KEY);
+
     this.activities.forEach(a => total += a.totalTime());
 
-    return total.toFixed(2);  
+    return DateTimeHelper.formatTime(total, format);
   }
 }

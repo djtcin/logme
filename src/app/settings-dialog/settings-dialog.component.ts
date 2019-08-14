@@ -7,6 +7,8 @@ import { ActivityType } from '../common/activity-type';
 
 const NAME_KEY = 'settings-user-name';
 const SPRINT_KEY = 'settings-sprint';
+const TIME_FORMAT_KEY = 'time-format';
+const TIME_FORMAT_DEFAULT = 'hours-minutes';
 
 @Component({
   selector: 'app-settings-dialog',
@@ -16,6 +18,7 @@ const SPRINT_KEY = 'settings-sprint';
 export class SettingsDialogComponent implements OnInit {
 	userName: string;
 	sprint: string;
+  timeFormat: string;
 	types: ActivityType[];
 	deletedTypes: ActivityType[];
 
@@ -26,8 +29,9 @@ export class SettingsDialogComponent implements OnInit {
   ngOnInit() {
   	this.types = this.dataService.getActivityTypes();
   	this.deletedTypes = [];
-  	this.userName = localStorage.getItem(NAME_KEY);
-  	this.sprint = localStorage.getItem(SPRINT_KEY);
+  	this.userName = localStorage.getItem(NAME_KEY) || '';
+  	this.sprint = localStorage.getItem(SPRINT_KEY) || '';
+    this.timeFormat = localStorage.getItem(TIME_FORMAT_KEY) || TIME_FORMAT_DEFAULT;
   }
 
   onAddType() {
@@ -37,13 +41,13 @@ export class SettingsDialogComponent implements OnInit {
   }
 
   onCancelClick(): void {
-  	// TODO: restore types if the name was changed
     this.dialogRef.close();
   }
 
   onSaveClick(): void {
   	localStorage.setItem(NAME_KEY, this.userName);
-  	localStorage.setItem(SPRINT_KEY, this.sprint);
+    localStorage.setItem(SPRINT_KEY, this.sprint);
+  	localStorage.setItem(TIME_FORMAT_KEY, this.timeFormat);
   	
   	this.types.forEach(t => this.dataService.saveActivityType(t));
   	this.deletedTypes.forEach(t => this.dataService.removeActivityType(t));

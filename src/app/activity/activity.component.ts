@@ -5,6 +5,10 @@ import { Activity } from '../common/activity';
 import { Log } from '../common/log';
 import { DataService } from '../common/data.service';
 import { ActivityDialogComponent } from '../activity-dialog/activity-dialog.component';
+import { DateTimeHelper } from '../common/date-time.helper';
+
+// TODO
+const TIME_FORMAT_KEY = 'time-format';
 
 @Component({
   selector: 'app-activity',
@@ -17,6 +21,11 @@ export class ActivityComponent implements OnInit {
   constructor(public dialog: MatDialog, private dataService: DataService) { }
 
   ngOnInit() {
+  }
+
+  totalTimeFormated() : string {
+    const format = localStorage.getItem(TIME_FORMAT_KEY);
+    return DateTimeHelper.formatTime(this.activity.totalTime(), format);
   }
 
   onStart() {
@@ -32,7 +41,6 @@ export class ActivityComponent implements OnInit {
         this.dataService.saveLog(l);
       }
     });
-
   }
 
   onStop() {
