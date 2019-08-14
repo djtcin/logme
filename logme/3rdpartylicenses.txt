@@ -101,6 +101,8 @@ THE SOFTWARE.
 
 @angular/material/menu
 
+@angular/material/select
+
 @angular/material/tabs
 
 @angular/material/toolbar
