@@ -4,13 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataService } from './common/data.service';
 import { ActivityType } from './common/activity-type';
 import { Activity } from './common/activity';
+import { Settings } from './common/settings';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { ActivityDialogComponent } from './activity-dialog/activity-dialog.component';
 import { ImportExportDialogComponent } from './import-export-dialog/import-export-dialog.component';
 import { DateTimeHelper } from './common/date-time.helper';
-
-// TODO
-const TIME_FORMAT_KEY = 'time-format';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +19,13 @@ export class AppComponent implements OnInit {
   title = 'Logme';
   activityTypes: ActivityType[];
   activities: Activity[];
+  settings: Settings;
 
   constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.settings = this.dataService.getSettings();
+    
   	this.activityTypes = this.dataService.getActivityTypes();
     this.dataService.getActivityTypesObservable().subscribe(
       (activityTypes: ActivityType[]) => {
@@ -66,7 +67,7 @@ export class AppComponent implements OnInit {
   totalHoursToday() {
     let total = 0.0;
     const today = new Date();
-    const format = localStorage.getItem(TIME_FORMAT_KEY);
+    const format = this.settings.timeFormat;
     
     this.activities.forEach(a => total += a.timeByDate(today));
 
@@ -75,7 +76,7 @@ export class AppComponent implements OnInit {
 
   totalHours() {
     let total = 0.0;
-    const format = localStorage.getItem(TIME_FORMAT_KEY);
+    const format = this.settings.timeFormat;
 
     this.activities.forEach(a => total += a.totalTime());
 

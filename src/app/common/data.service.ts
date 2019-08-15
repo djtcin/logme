@@ -6,26 +6,27 @@ import { ActivityType } from './activity-type';
 import { Activity } from './activity';
 import { Log } from './log';
 import { DataStorageService } from './data-storage.service';
+import { Settings } from './settings';
 
 const ACTIVITY = 'ACTIVITY';
 const ACTIVITY_TYPE = 'ACTIVITY_TYPE';
 const LOG = 'LOG';
-const NAME_KEY = 'settings-user-name';
-const SPRINT_KEY = 'settings-sprint';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-	private activityTypes: ActivityType[];
-	private activityTypes$ = new EventEmitter<ActivityType[]>();
-	private activities: Activity[];
-	private activities$ = new EventEmitter<Activity[]>();
-	private logs: Log[];
-	private logs$ = new EventEmitter<Log[]>();
+  private activityTypes: ActivityType[];
+  private activityTypes$ = new EventEmitter<ActivityType[]>();
+  private activities: Activity[];
+  private activities$ = new EventEmitter<Activity[]>();
+  private logs: Log[];
+  private logs$ = new EventEmitter<Log[]>();
+  private settings: Settings;
 
   constructor(private dataStorageService: DataStorageService) { 
-  	this.loadFromStorage();
+    this.settings = new Settings();
+    this.loadFromStorage();
   }
 
   loadFromStorage() {
@@ -37,15 +38,34 @@ export class DataService {
       activity.type = this.activityTypes.find(t => t.id == activity.type.id);
       return activity
     });
+    this.loadSettings();
+  }
 
+  getSettings() : Settings {
+    return this.settings;
+  }
+
+  saveSettings() {
+    this.dataStorageService.setSettings(this.settings);
+  }
+
+  loadSettings() {
+    var savedSettings = this.dataStorageService.getSettings();
+
+    if (!savedSettings) {
+      // If settings is not saved yet, save the empty settings on data storage
+      this.saveSettings();
+    } else {
+      Object.assign(this.settings, savedSettings);  
+    }
   }
 
   exportData() {
-    const data = localStorage;
+    const data = this.dataStorageService.getAllData();
     const json = JSON.stringify(data);
     const blob = new Blob([json], {type: "application/json"});
-    const userName = localStorage.getItem(NAME_KEY);
-    const sprint = localStorage.getItem(SPRINT_KEY);
+    const userName = this.settings.userName;
+    const sprint = this.settings.sprint;
 
     FileSaver.saveAs(
       blob, 
@@ -61,8 +81,7 @@ export class DataService {
 
     fileReader.onload = (e) => {
       const data = JSON.parse(fileReader.result.toString());
-      localStorage.clear();
-      Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
+      this.dataStorageService.replaceAllData(data);
       this.loadFromStorage();
       this.activityTypes$.emit(this.activityTypes.slice());
       this.activities$.emit(this.activities.slice());

@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { ActivityType } from './activity-type';
 import { Activity } from './activity';
+import { Settings } from './settings';
 import { Log } from './log';
 import { BaseEntity } from './base-entity';
+
+const SETTINGS_KEY = 'SETTINGS';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +40,23 @@ export class DataStorageService {
 
 	setList(typeName: string, entities: BaseEntity[]) {
 		localStorage.setItem(typeName, entities.map(e => e.id).join(';'));
+	}
+
+	getSettings() : Settings {
+		let flatItem = localStorage.getItem(SETTINGS_KEY);
+		return JSON.parse(flatItem);
+	}
+
+	setSettings(settings: Settings) {
+		localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+	}
+
+	getAllData() {
+		return localStorage;
+	}
+
+	replaceAllData(data) {
+		localStorage.clear();
+		Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
 	}
 }

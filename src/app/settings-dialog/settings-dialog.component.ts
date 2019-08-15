@@ -4,11 +4,7 @@ import { UUID } from 'angular2-uuid';
 
 import { DataService } from '../common/data.service';
 import { ActivityType } from '../common/activity-type';
-
-const NAME_KEY = 'settings-user-name';
-const SPRINT_KEY = 'settings-sprint';
-const TIME_FORMAT_KEY = 'time-format';
-const TIME_FORMAT_DEFAULT = 'hours-minutes';
+import { Settings } from '../common/settings';
 
 @Component({
   selector: 'app-settings-dialog',
@@ -16,11 +12,9 @@ const TIME_FORMAT_DEFAULT = 'hours-minutes';
   styleUrls: ['./settings-dialog.component.scss']
 })
 export class SettingsDialogComponent implements OnInit {
-	userName: string;
-	sprint: string;
-  timeFormat: string;
 	types: ActivityType[];
 	deletedTypes: ActivityType[];
+  settings: Settings;
 
 	constructor(
 		public dialogRef: MatDialogRef<SettingsDialogComponent>,
@@ -29,9 +23,7 @@ export class SettingsDialogComponent implements OnInit {
   ngOnInit() {
   	this.types = this.dataService.getActivityTypes();
   	this.deletedTypes = [];
-  	this.userName = localStorage.getItem(NAME_KEY) || '';
-  	this.sprint = localStorage.getItem(SPRINT_KEY) || '';
-    this.timeFormat = localStorage.getItem(TIME_FORMAT_KEY) || TIME_FORMAT_DEFAULT;
+    this.settings = this.dataService.getSettings();
   }
 
   onAddType() {
@@ -41,14 +33,12 @@ export class SettingsDialogComponent implements OnInit {
   }
 
   onCancelClick(): void {
+    this.dataService.loadSettings();
     this.dialogRef.close();
   }
 
   onSaveClick(): void {
-  	localStorage.setItem(NAME_KEY, this.userName);
-    localStorage.setItem(SPRINT_KEY, this.sprint);
-  	localStorage.setItem(TIME_FORMAT_KEY, this.timeFormat);
-  	
+  	this.dataService.saveSettings();
   	this.types.forEach(t => this.dataService.saveActivityType(t));
   	this.deletedTypes.forEach(t => this.dataService.removeActivityType(t));
   	this.dataService.updateActivityTypeList(this.types);
