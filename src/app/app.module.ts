@@ -14,6 +14,7 @@ import { DataStorageService } from './common/data-storage.service';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { ActivityDialogComponent } from './activity-dialog/activity-dialog.component';
 import { ImportExportDialogComponent } from './import-export-dialog/import-export-dialog.component';
+import { SummaryBarComponent } from './summary-bar/summary-bar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ImportExportDialogComponent } from './import-export-dialog/import-expor
     ActivityListComponent,
     SettingsDialogComponent,
     ActivityDialogComponent,
-    ImportExportDialogComponent
+    ImportExportDialogComponent,
+    SummaryBarComponent
   ],
   imports: [
     BrowserModule,

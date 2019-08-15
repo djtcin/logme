@@ -32,4 +32,17 @@ export class DateTimeHelper {
 		}
 	}
 
+	static getMonday(date: Date) {
+		date = new Date(date);
+	  let day = date.getDay(),
+	      diff = date.getDate() - day + (day == 0 ? -6:1);
+
+	  return new Date(date.setDate(diff));
+	}
+
+	static getNextDate(date: Date) {
+		let nextDate = new Date();
+		nextDate.setDate(date.getDate()+1);
+		return nextDate;
+	}
 }
