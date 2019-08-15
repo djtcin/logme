@@ -31,16 +31,16 @@
     <mat-tab label="Report">
       <div class="big-margin-top">
         <mat-form-field class="big-margin-right">
-          <input matInput placeholder="User name" [(ngModel)]="userName">
+          <input matInput placeholder="User name" [(ngModel)]="settings.userName">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Sprint" [(ngModel)]="sprint">
+          <input matInput placeholder="Sprint" [(ngModel)]="settings.sprint">
         </mat-form-field>
       </div>
       <div class="flex-div">
         <mat-form-field class="fill-remaining-space">
           <mat-label>Time format</mat-label>
-          <mat-select [(ngModel)]="timeFormat" >
+          <mat-select [(ngModel)]="settings.timeFormat" >
             <mat-option value="hours">
               Hours (7.5h)
             </mat-option>

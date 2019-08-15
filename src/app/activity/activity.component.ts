@@ -3,12 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Activity } from '../common/activity';
 import { Log } from '../common/log';
+import { Settings } from '../common/settings';
 import { DataService } from '../common/data.service';
 import { ActivityDialogComponent } from '../activity-dialog/activity-dialog.component';
 import { DateTimeHelper } from '../common/date-time.helper';
-
-// TODO
-const TIME_FORMAT_KEY = 'time-format';
 
 @Component({
   selector: 'app-activity',
@@ -17,15 +15,16 @@ const TIME_FORMAT_KEY = 'time-format';
 })
 export class ActivityComponent implements OnInit {
 	@Input() activity: Activity;
+  settings: Settings;
 
   constructor(public dialog: MatDialog, private dataService: DataService) { }
 
   ngOnInit() {
+    this.settings = this.dataService.getSettings();
   }
 
   totalTimeFormated() : string {
-    const format = localStorage.getItem(TIME_FORMAT_KEY);
-    return DateTimeHelper.formatTime(this.activity.totalTime(), format);
+    return DateTimeHelper.formatTime(this.activity.totalTime(), this.settings.timeFormat);
   }
 
   onStart() {
